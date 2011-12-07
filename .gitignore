@@ -2,3 +2,4 @@ build/*
 bin/*
 *.o
 *.a
+.sconsign.dblite
