@@ -1,0 +1,18 @@
+This software is provided 'as-is', without any express or implied warranty. 
+In no event will the authors be held liable for any damages arising from the
+use of this software.
+
+Do what you wish, with this code.
+
+Author: Jones
+
+Build using SCons. Simply type:
+
+ $ scons
+
+SCons is available in the official repositories of most linux distributions
+
+To run the little demo:
+    
+ $ bin/gap_buffer_demo
+
