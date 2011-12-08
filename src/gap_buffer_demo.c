@@ -36,7 +36,7 @@ int main()
     gap_buffer_put_str(gb, "lo!#o ");       gap_buffer_print(gb);
 
     gap_buffer_delete(gb);                  gap_buffer_print(gb);
-    
+
     gap_buffer_delete(gb);                  gap_buffer_print(gb);
 
     gap_buffer_delete(gb);                  gap_buffer_print(gb);
@@ -77,6 +77,8 @@ int main()
     gap_buffer_move_gap(gb);
 
     gap_buffer_print(gb);
+
+    gap_buffer_destroy(gb);
 
     return 0;
 }
