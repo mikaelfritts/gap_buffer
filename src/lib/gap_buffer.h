@@ -13,11 +13,21 @@
 #ifndef DRJ_GAP_BUFFER_H__
 #define DRJ_GAP_BUFFER_H__
 
+#define DEBUG 1
+
 #define INSERT_MODE 0
 #define REPLACE_MODE 1
 
 #define DIST_END(p) gap_buffer_distance_to_end(p)
 #define DIST_START(p) gap_buffer_distance_to_start(p)
+
+#ifdef DEBUG
+    #define INITIAL_SIZE 10 
+    #define GROW_SIZE 10
+#else
+    #define INITIAL_SIZE 1024
+    #define GROW_SIZE 1024
+#endif
 
 typedef struct gap_buffer *gap_T;
 

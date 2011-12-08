@@ -30,12 +30,12 @@ gap_T gap_buffer_new()
 {
     gap_T g = malloc(sizeof(struct gap_buffer));
 
-    g->buffer = malloc(sizeof(char) * 10);
+    g->buffer = malloc(sizeof(char) * INITIAL_SIZE);
 
     g->start = 0;
-    g->end = 9;
+    g->end = INITIAL_SIZE - 1;
     g->gap_start = 0;
-    g->gap_end = 9;
+    g->gap_end = INITIAL_SIZE -1;
     g->cursor = 0;
     g->mode = INSERT_MODE;
 
@@ -95,8 +95,8 @@ void gap_buffer_move_gap(gap_T g)
 
 void gap_buffer_resize_buffer(gap_T g)
 {   
-    // double buffer size - buffer begins with 0, so actual size is g->end + 1
-    int new_size = (g->end + 1) * 2; 
+    // expand buffer size - buffer begins with 0, so actual size is g->end + 1
+    int new_size = (g->end + 1) + GROW_SIZE; 
 
     // length of characters after the gap to move to end of resized buf
     int length = g->end - g->gap_end;
@@ -235,9 +235,11 @@ void gap_buffer_replace(gap_T g, char ch)
 
 void gap_buffer_delete(gap_T g)
 {
-    // does nothing if the cursor is on the gap start
+    // move gap first, if necessary. 
     gap_buffer_move_gap(g);
 
+    // deleting doesnt actually overwrite anything - it just moves the gap back
+    // one space, but we have to be sure we arent on the zero index already
     if (g->gap_start != 0) 
     {
         g->gap_start--;
@@ -263,10 +265,7 @@ void gap_buffer_put_str(gap_T g, char * str)
 
 void gap_buffer_set_mode(gap_T g, int mode)
 {
-    if (mode == REPLACE_MODE)
-        g->mode = REPLACE_MODE;
-    else
-        g->mode = INSERT_MODE;
+    g->mode = mode == REPLACE_MODE ?  REPLACE_MODE : INSERT_MODE;
 }
 
 int gap_buffer_distance_to_end(gap_T g)
