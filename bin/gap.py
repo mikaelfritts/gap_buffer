@@ -23,7 +23,6 @@ class GapBuffer(Structure):
 class LibGap():
     def __init__(self, lib):
         self.libgap = cdll.LoadLibrary(lib)
-
         self.libgap.gap_buffer_new.restype = POINTER(GapBuffer)
         self.libgap.gap_buffer_move_gap.restype = c_void_p
         self.libgap.gap_buffer_resize_buffer.restype = c_void_p
@@ -81,30 +80,23 @@ class LibGap():
 if __name__ == '__main__':
     try:
         lg = LibGap('lib/libgap_buffer.so')
-    except:
-        print "Caught an exception loading libgap_buffer.so.  Try running scons"
-        sys.exit(1)
-
+    except OSError, e:
+        print(e)
+        print("Try building the project with 'scons', and run again")
+        sys.exit()
     lg.g_print()
-
     lg.put('x')
     lg.g_print()
-
     lg.put_str("Hello World")
     lg.g_print()
-
     lg.move_cursor(-4)
-
     for x in range(0, 5):
         lg.replace('X')
         lg.g_print()
-
     lg.move_cursor(lg.distance_to_start()+1)
     lg.g_print()
-
     lg.delete()
     lg.g_print()
-
     lg.move_cursor(5)
     lg.put_str(" there,")
     lg.g_print()
