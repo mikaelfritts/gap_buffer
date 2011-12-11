@@ -51,7 +51,7 @@ class LibGap():
         self.libgap.gap_buffer_insert(self.gap_buffer, c_char(ch))
 
     def replace(self, ch):
-        self.libgap.gap_buffer_replace(self.gap_buffer, c_char(ch))
+        self.libgap.gap_buffer_replace(self.gap_buffer, ord(ch))
 
     def delete(self):
         self.libgap.gap_buffer_delete(self.gap_buffer)
@@ -63,7 +63,7 @@ class LibGap():
         self.libgap.gap_buffer_set_mode(self.gap_buffer, c_int(mode))
 
     def put(self, ch):
-        self.libgap.gap_buffer_put(self.gap_buffer, c_char(ch))
+        self.libgap.gap_buffer_put(self.gap_buffer, ord(ch))
 
     def g_print(self):
         self.libgap.gap_buffer_print(self.gap_buffer)
@@ -80,14 +80,14 @@ class LibGap():
 if __name__ == '__main__':
     try:
         lg = LibGap('lib/libgap_buffer.so')
-    except OSError, e:
-        print(e)
+    except OSError:
+        #print(e)
         print("Try building the project with 'scons', and run again")
         sys.exit()
     lg.g_print()
     lg.put('x')
     lg.g_print()
-    lg.put_str("Hello World")
+    lg.put_str(b"Hello World")
     lg.g_print()
     lg.move_cursor(-4)
     for x in range(0, 5):
@@ -98,5 +98,5 @@ if __name__ == '__main__':
     lg.delete()
     lg.g_print()
     lg.move_cursor(5)
-    lg.put_str(" there,")
+    lg.put_str(b" there,")
     lg.g_print()
