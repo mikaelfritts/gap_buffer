@@ -1,5 +1,7 @@
 build/*
 bin/*
+!bin/*.py
 *.o
 *.a
+*.pyc
 .sconsign.dblite
