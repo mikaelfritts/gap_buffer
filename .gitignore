@@ -4,4 +4,5 @@ bin/*
 *.o
 *.a
 *.pyc
+.ropeproject/*
 .sconsign.dblite
